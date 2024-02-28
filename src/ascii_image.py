@@ -1,7 +1,7 @@
+from PIL import Image
 
 
-
-class Image:
+class Ascii_image:
     def __init__(self, filename, alias="") -> None:
         self.filename = filename
         self.alias = alias
@@ -10,7 +10,23 @@ class Image:
         self.width = 50 # Default width is 50
         self.height = None
         self.brightness = 1 # Default brightness is 1
-        self.contrast = 1 # Default contrast is 1 
+        self.contrast = 1 # Default contrast is 1
+        self.image = None
+        self.pixelated = None
+
+        self.load()
+
+    def load(self) -> None:
+        with Image.open(self.filename) as img:
+            self.image = img.convert("L")
+            self.actual_width, self.actual_height = img.size
+             
+    def pixelate(self) -> None:
+        """Converts the image into a 2D-list size: height x width
+        where each element is the average number value of the pixels
+        in the corresponding area of the original image."""
+        self.pixelated = [[0 for _ in range(self.width)] for _ in range(self.height)]
+        pass
 
     def set_width(self, width) -> None:
         self.width = width

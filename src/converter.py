@@ -1,9 +1,10 @@
-from image import Image
+from ascii_image import Ascii_image
 
 
 class Converter:
     def __init__(self) -> None:
-        pass
+        images = []
+        current = None
 
     def load(self, filename, alias="") -> None:
         pass
