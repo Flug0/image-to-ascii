@@ -1,1 +1,1 @@
-# Image to ASKII
+# Image to ASCII
