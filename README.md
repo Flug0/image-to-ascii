@@ -1,1 +1,1 @@
-# JPG to ASKII
+# Image to ASKII
