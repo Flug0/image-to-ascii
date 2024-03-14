@@ -17,16 +17,42 @@ class Ascii_image:
         self.load()
 
     def load(self) -> None:
-        with Image.open(self.filename) as img:
+        with Image.open(f"../images/{self.filename}") as img:
             self.image = img.convert("L")
             self.actual_width, self.actual_height = img.size
+            self.calc_ratio()
              
     def pixelate(self) -> None:
         """Converts the image into a 2D-list size: height x width
         where each element is the average number value of the pixels
         in the corresponding area of the original image."""
         self.pixelated = [[0 for _ in range(self.width)] for _ in range(self.height)]
-        pass
+        for i in range(self.height):
+            for j in range(self.width):
+                x1 = int(j * (self.actual_width / self.width))
+                x2 = int((j + 1) * (self.actual_width / self.width))
+                y1 = int(i * (self.actual_height / self.height))
+                y2 = int((i + 1) * (self.actual_height / self.height))
+                area = self.image.crop((x1, y1, x2, y2))
+                self.pixelated[i][j] = int(sum(area.getdata()) / len(area.getdata()))
+    
+    def render(self) -> None:
+        """Renders the pixelated image."""
+        if not self.pixelated:
+            self.pixelate()
+        for row in self.pixelated:
+            for pixel in row:
+                print(self.get_char(pixel), end="")
+            print()
+
+    def get_char(self, pixel) -> str:
+        """Returns a character based on the pixel value."""
+        chars = "@%#*+=-:. "
+        return chars[int(pixel / 255 * len(chars))-1]
+
+    def calc_ratio(self) -> None:
+        ratio = self.actual_width / self.actual_height
+        self.height = int(self.width / ratio)
 
     def set_width(self, width) -> None:
         self.width = width

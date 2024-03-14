@@ -3,17 +3,24 @@ from ascii_image import Ascii_image
 
 class Converter:
     def __init__(self) -> None:
+        self.ascii = None
         images = []
         current = None
 
     def load(self, filename, alias="") -> None:
-        pass
+        self.ascii = Ascii_image(filename, alias)
 
     def render(self, image="", current=False, file_path="") -> None:
-        pass
+        if self.ascii:
+            self.ascii.render()
+        else:
+            print("No image loaded.")
 
     def info(self) -> None:
-        pass
+        if self.ascii:
+            self.ascii.info()
+        else:
+            print("No image loaded.")
 
     def set_width(self, image, width) -> None:
         pass
